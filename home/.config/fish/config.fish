@@ -36,3 +36,6 @@ end
 fish_add_path "$HOME/.local/bin"
 fish_add_path /opt/homebrew/opt/libpq/bin
 fish_add_path /opt/homebrew/opt/openssl/bin
+
+# pycharm
+fish_add_path "$HOME/Library/Application Support/JetBrains/Toolbox/scripts"
