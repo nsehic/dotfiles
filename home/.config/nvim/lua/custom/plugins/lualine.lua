@@ -5,7 +5,7 @@ return {
     require('lualine').setup {
       options = {
         icons_enabled = vim.g.have_nerd_font,
-        theme = 'everforest',
+        theme = 'kanso',
       },
     }
   end,

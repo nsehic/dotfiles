@@ -1,19 +1,36 @@
 return {
-  'neanias/everforest-nvim',
-  version = false,
+  'webhooked/kanso.nvim',
   lazy = false,
-  priority = 1000, -- make sure to load this before all the other start plugins
-  -- Optional; default configuration will be used if setup isn't called.
+  priority = 1000,
   config = function()
-    require('everforest').setup {
-      background = 'hard',
-      transparent_background_level = 0,
-      italics = true,
-      disable_italic_comments = false,
-      ui_contrast = 'low',
-      dim_inactive_windows = false,
-      spell_foreground = false,
+    require('kanso').setup {
+      bold = false, -- enable bold fonts
+      italics = false, -- enable italics
+      compile = false, -- enable compiling the colorscheme
+      undercurl = true, -- enable undercurls
+      commentStyle = { italic = true },
+      functionStyle = {},
+      keywordStyle = { italic = true },
+      statementStyle = {},
+      typeStyle = {},
+      transparent = false, -- do not set background color
+      dimInactive = false, -- dim inactive window `:h hl-NormalNC`
+      terminalColors = true, -- define vim.g.terminal_color_{0,17}
+      colors = { -- add/modify theme and palette colors
+        palette = {},
+        theme = { zen = {}, pearl = {}, ink = {}, all = {} },
+      },
+      overrides = function(colors) -- add/modify highlights
+        return {}
+      end,
+      background = { -- map the value of 'background' option to a theme
+        dark = 'ink', -- try "zen", "mist" or "pearl" !
+        light = 'ink', -- try "zen", "mist" or "pearl" !
+      },
+      foreground = 'default', -- "default" or "saturated" (can also be a table like background)
     }
-    vim.cmd.colorscheme 'everforest'
+
+    -- setup must be called before loading
+    vim.cmd 'colorscheme kanso'
   end,
 }
