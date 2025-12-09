@@ -151,14 +151,6 @@ return {
       --
       bashls = {},
       terraformls = {},
-      postgres_lsp = {
-        cmd = { 'postgrestools', 'lsp-proxy' },
-        filetypes = {
-          'sql',
-        },
-        root_dir = vim.fs.root(0, { 'postgrestools.jsonc' }),
-        single_file_support = true,
-      },
       vtsls = {},
       dockerls = {},
       eslint = {
