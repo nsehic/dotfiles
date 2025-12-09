@@ -52,6 +52,7 @@ map <leader>cc <Action>(IntroduceConstant)
 map <leader>ci <Action>(Inline)
 map <leader>pv <Action>(SplitVertically)
 map <leader>ph <Action>(SplitHorizontally)
+map <leader>f <Action>(ReformatCode)
 
 " Bookmarks
 nmap <leader>bt <Action>(ToggleBookmark)
