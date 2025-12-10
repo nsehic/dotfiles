@@ -3,6 +3,8 @@ font-size=15
 
 shell-integration = fish
 
+macos-option-as-alt = true
+
 title = ghostty
 clipboard-read = allow
 clipboard-write = allow
