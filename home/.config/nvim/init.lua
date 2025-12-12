@@ -46,6 +46,12 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+-- Move selected lines down
+vim.keymap.set('x', 'J', ":move '>+1<CR>gv=gv", { silent = true })
+
+-- Move selected lines up
+vim.keymap.set('x', 'K', ":move '<-2<CR>gv=gv", { silent = true })
+
 -- Split creation
 local opts = { noremap = true, silent = true }
 vim.keymap.set('n', '<leader>ph', ':split<CR>', opts)
