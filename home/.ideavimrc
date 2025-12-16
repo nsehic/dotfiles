@@ -79,9 +79,13 @@ vmap <leader>bm <Action>(ToggleBookmarkWithMnemonic)
 xmap <leader>bm <Action>(ToggleBookmarkWithMnemonic)
 
 " Navigation and Jumps
-map <leader>jh <Action>(Back)
-map <leader>jl <Action>(Forward)
+nmap <C-o> <Action>(Back)
+nmap <C-i> <Action>(Forward)
 
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 "" Map \b to toggle the breakpoint on the current line
 " map \b <Action>(ToggleLineBreakpoint)
 
