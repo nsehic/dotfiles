@@ -25,6 +25,7 @@ return {
       dim_inactive = false,
       transparent_mode = false,
     }
+    vim.lsp.semantic_tokens.highlight = false
     vim.cmd 'colorscheme gruvbox'
   end,
 }
