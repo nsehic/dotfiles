@@ -5,16 +5,16 @@ return {
     require('gruvbox').setup {
       terminal_colors = true, -- add neovim terminal colors
       undercurl = true,
-      underline = true,
-      bold = true,
+      underline = false,
+      bold = false,
       italic = {
-        strings = true,
-        emphasis = true,
+        strings = false,
+        emphasis = false,
         comments = true,
         operators = false,
-        folds = true,
+        folds = false,
       },
-      strikethrough = true,
+      strikethrough = false,
       invert_selection = false,
       invert_signs = false,
       invert_tabline = false,
