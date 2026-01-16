@@ -39,3 +39,8 @@ fish_add_path /opt/homebrew/opt/openssl/bin
 
 # pycharm
 fish_add_path "$HOME/Library/Application Support/JetBrains/Toolbox/scripts"
+
+# Added by LM Studio CLI (lms)
+set -gx PATH $PATH /Users/nermin.sehic/.lmstudio/bin
+# End of LM Studio CLI section
+
