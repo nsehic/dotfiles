@@ -6,3 +6,4 @@ lazy-lock.json
 .DS_Store
 home/.config/configstore/
 home/.config/github-copilot/
+home/.config/gcloud/
