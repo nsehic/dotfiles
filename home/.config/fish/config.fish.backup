@@ -45,6 +45,3 @@ fish_add_path "$HOME/Library/Application Support/JetBrains/Toolbox/scripts"
 set -gx PATH $PATH /Users/nermin.sehic/.lmstudio/bin
 # End of LM Studio CLI section
 
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/nermin.sehic/Developer/google-cloud-sdk/path.fish.inc' ]; . '/Users/nermin.sehic/Developer/google-cloud-sdk/path.fish.inc'; end
