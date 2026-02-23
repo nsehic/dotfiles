@@ -7,3 +7,5 @@ lazy-lock.json
 home/.config/configstore/
 home/.config/github-copilot/
 home/.config/gcloud/
+home/.config/jgit/
+home/.config/raycast/

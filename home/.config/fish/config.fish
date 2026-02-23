@@ -48,3 +48,30 @@ set -gx PATH $PATH /Users/nermin.sehic/.lmstudio/bin
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/nermin.sehic/Developer/google-cloud-sdk/path.fish.inc' ]; . '/Users/nermin.sehic/Developer/google-cloud-sdk/path.fish.inc'; end
+
+
+function aws-login
+    # Use passed profile or default
+    set profile $argv[1]
+    if test -z "$profile"
+        set profile default
+    end
+
+    echo "Using AWS profile: $profile"
+
+    # Clear old credentials
+    set -e AWS_ACCESS_KEY_ID
+    set -e AWS_SECRET_ACCESS_KEY
+    set -e AWS_SESSION_TOKEN
+
+    # SSO login + export fresh creds
+    aws sso login --profile $profile
+    aws configure export-credentials --profile $profile --format env | source
+
+    # Only run dev scripts inside the K3 directory
+    if test "$PWD" = "/Users/nermin.sehic/Developer/K3"
+        echo "Running K3 dev setup..."
+        ./dev_setup.sh service_down
+        ./dev_setup.sh service_up
+    end
+end
