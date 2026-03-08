@@ -75,3 +75,10 @@ function aws-login
         ./dev_setup.sh service_up
     end
 end
+
+
+function update-packages
+  brew update
+  brew upgrade
+  gcloud components update
+end
