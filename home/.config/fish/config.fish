@@ -41,6 +41,8 @@ fish_add_path /opt/homebrew/opt/openssl/bin
 # pycharm
 fish_add_path "$HOME/Library/Application Support/JetBrains/Toolbox/scripts"
 
+fish_add_path (go env GOPATH)/bin
+
 # Added by LM Studio CLI (lms)
 set -gx PATH $PATH /Users/nermin.sehic/.lmstudio/bin
 # End of LM Studio CLI section
@@ -51,8 +53,16 @@ if [ -f '/Users/nermin.sehic/Developer/google-cloud-sdk/path.fish.inc' ]; . '/Us
 
 
 function aws-login
-    # Use passed profile or default
-    set profile $argv[1]
+    # Parse flags and profile
+    set profile ""
+    set restart_containers false
+    for arg in $argv
+        if test "$arg" = "--restart-containers"
+            set restart_containers true
+        else
+            set profile $arg
+        end
+    end
     if test -z "$profile"
         set profile default
     end
@@ -70,9 +80,11 @@ function aws-login
 
     # Only run dev scripts inside the K3 directory
     if test "$PWD" = "/Users/nermin.sehic/Developer/K3"
-        echo "Running K3 dev setup..."
-        ./dev_setup.sh service_down
-        ./dev_setup.sh service_up
+        if test "$restart_containers" = true
+            echo "Running K3 dev setup..."
+            ./dev_setup.sh service_down
+            ./dev_setup.sh service_up
+        end
     end
 end
 
