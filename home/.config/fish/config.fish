@@ -89,7 +89,7 @@ function aws-login
 end
 
 
-function update-packages
+function up
   brew update
   brew upgrade
   gcloud components update
