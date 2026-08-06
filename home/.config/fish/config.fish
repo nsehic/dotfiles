@@ -94,3 +94,39 @@ function up
   brew upgrade
   gcloud components update
 end
+
+function clean-git-branches
+  # Automatically detect the default remote branch (e.g., refs/remotes/origin/HEAD -> main)
+  set -l default_branch (git remote show origin | string match -r 'HEAD branch: (.*)' | string replace -r 'HEAD branch: ' '')
+
+  # Fallback to local 'main' or 'master' if remote HEAD detection fails
+  if test -z "$default_branch"
+      if git show-ref --verify --quiet refs/heads/main
+          set default_branch "main"
+      else if git show-ref --verify --quiet refs/heads/master
+          set default_branch "master"
+      else if git show-ref --verify --quiet refs/heads/develop
+          set default_branch "develop"
+      else
+          echo "Error: Could not detect the main branch for this repository."
+          return 1
+      end
+  end
+
+  echo "Detected main branch: $default_branch"
+  
+  # Execute the cleanup sequence safely
+  git checkout $default_branch
+  and git fetch --prune
+  
+  # Gather branches marked as ': gone]'
+  set -l branches (git branch -vv | string match -r '.*: gone\].*' | string replace -r '^\*?\s*' '' | awk '{print $1}')
+  
+  if test -n "$branches"
+      echo "Deleting the following local-only branches:"
+      echo $branches | tr ' ' '\n'
+      git branch -D $branches
+  else
+      echo "No local-only branches to delete."
+  end
+end

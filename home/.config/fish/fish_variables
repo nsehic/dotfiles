@@ -1,6 +1,7 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
 SETUVAR --export PNPM_HOME:/Users/nerminsehic/Library/pnpm
+SETUVAR PROD_SHELL_REPOS:kogan/ksub\x1ekogan/k3
 SETUVAR __fish_initialized:4300
 SETUVAR _fisher_edc_2F_bass_files:\x7e/\x2econfig/fish/functions/__bass\x2epy\x1e\x7e/\x2econfig/fish/functions/bass\x2efish
 SETUVAR _fisher_jomik_2F_fish_2D_gruvbox_files:\x7e/\x2econfig/fish/functions/theme_gruvbox\x2efish
