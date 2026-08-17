@@ -1,47 +1,27 @@
-# prod_shell — open a production bastion shell with a red terminal background.
-
-function __prod_shell_reset -d "Restore the terminal background colour"
-    printf '\e]111\a'
-end
-
-function __prod_shell_slug -d "Print the lowercased owner/repo slug of \$PWD's repo"
-    if not git rev-parse --is-inside-work-tree >/dev/null 2>&1
-        echo "prod_shell: not inside a git repository" >&2
-        return 1
-    end
-
-    set -l url (git remote get-url origin 2>/dev/null)
-    if test -z "$url"
-        echo "prod_shell: repo has no 'origin' remote, cannot identify it" >&2
-        return 1
-    end
-
-    string replace -r '\.git$' '' -- $url \
-        | string replace -r '^.*[:/]([^/:]+/[^/]+)$' '$1' \
-        | string lower
-end
-
-function prod_shell -d "Prod bastion shell with a red terminal (allow-listed repos only)"
-    argparse -x 'h,l,a,r,R' h/help l/list a/allow 'r/remove=?' R/reset -- $argv
+function prod_shell -d "Prod bastion shell with a colored terminal background (allow-listed repos only)"
+    argparse -x 'h,l,a,r,R' h/help l/list a/allow 'r/remove=?' R/reset readonly -- $argv
     or return 2
 
     set -q PROD_SHELL_REPOS; or set -U PROD_SHELL_REPOS kogan/ksub kogan/k3
     set -q PROD_SHELL_BG; or set -g PROD_SHELL_BG '#3b0d0d'
+    set -q PROD_SHELL_READONLY_BG; or set -g PROD_SHELL_READONLY_BG '#0d3b0d'
 
     if set -q _flag_help
         echo "Usage: prod_shell [OPTIONS]
 
-Runs ./shortcuts.sh prod_shell with a red terminal background, but only from
+Runs ./shortcuts.sh prod_shell with a red or green terminal background, but only from
 repositories on the allow-list.
 
 Options:
+      --readonly        Run prod_shell_readonly with a green background
   -a, --allow           Add the current repo to the allow-list
   -r, --remove [SLUG]   Remove SLUG from the allow-list (default: current repo)
   -l, --list            Show the allow-list
   -R, --reset           Restore the background colour if it gets stuck
   -h, --help            Show this help
 
-Background colour: \$PROD_SHELL_BG (currently $PROD_SHELL_BG)"
+Background colour: \$PROD_SHELL_BG (currently $PROD_SHELL_BG)
+Read-only background colour: \$PROD_SHELL_READONLY_BG (currently $PROD_SHELL_READONLY_BG)"
         return 0
     end
 
@@ -113,10 +93,20 @@ Background colour: \$PROD_SHELL_BG (currently $PROD_SHELL_BG)"
         functions -e __prod_shell_restore
     end
 
-    printf '\e]11;%s\a' $PROD_SHELL_BG
-    ./shortcuts.sh prod_shell $argv
+    # Determine command and background color based on --readonly flag
+    set -l shortcut_cmd "prod_shell"
+    set -l bg_color $PROD_SHELL_BG
+
+    if set -q _flag_readonly
+        set shortcut_cmd "prod_shell_readonly"
+        set bg_color $PROD_SHELL_READONLY_BG
+    end
+
+    printf '\e]11;%s\a' $bg_color
+    ./shortcuts.sh $shortcut_cmd $argv
     set -l rc $status
 
     __prod_shell_reset
     return $rc
 end
+
