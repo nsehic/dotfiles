@@ -78,6 +78,9 @@ xmap <leader>bt <Action>(ToggleBookmark)
 vmap <leader>bm <Action>(ToggleBookmarkWithMnemonic)
 xmap <leader>bm <Action>(ToggleBookmarkWithMnemonic)
 
+nmap s <Action>(flash.search)
+xmap s <Action>(flash.search)
+
 " Navigation and Jumps
 nmap <C-o> <Action>(Back)
 nmap <C-i> <Action>(Forward)
