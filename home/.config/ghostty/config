@@ -1,4 +1,4 @@
-theme = Gruvbox Dark Hard
+theme = Atom One Dark
 font-size=13
 
 shell-integration = fish

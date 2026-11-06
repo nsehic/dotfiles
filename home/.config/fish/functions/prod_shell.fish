@@ -1,3 +1,26 @@
+# ~/.config/fish/functions/prod_shell.fish
+
+function __prod_shell_reset -d "Restore the terminal background colour"
+    printf '\e]111\a'
+end
+
+function __prod_shell_slug -d "Print the lowercased owner/repo slug of \$PWD's repo"
+    if not git rev-parse --is-inside-work-tree >/dev/null 2>&1
+        echo "prod_shell: not inside a git repository" >&2
+        return 1
+    end
+
+    set -l url (git remote get-url origin 2>/dev/null)
+    if test -z "$url"
+        echo "prod_shell: repo has no 'origin' remote, cannot identify it" >&2
+        return 1
+    end
+
+    string replace -r '\.git$' '' -- $url \
+        | string replace -r '^.*[:/]([^/:]+/[^/]+)$' '$1' \
+        | string lower
+end
+
 function prod_shell -d "Prod bastion shell with a colored terminal background (allow-listed repos only)"
     argparse -x 'h,l,a,r,R' h/help l/list a/allow 'r/remove=?' R/reset readonly -- $argv
     or return 2
@@ -93,7 +116,6 @@ Read-only background colour: \$PROD_SHELL_READONLY_BG (currently $PROD_SHELL_REA
         functions -e __prod_shell_restore
     end
 
-    # Determine command and background color based on --readonly flag
     set -l shortcut_cmd "prod_shell"
     set -l bg_color $PROD_SHELL_BG
 

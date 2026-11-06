@@ -78,6 +78,8 @@ xmap <leader>bt <Action>(ToggleBookmark)
 vmap <leader>bm <Action>(ToggleBookmarkWithMnemonic)
 xmap <leader>bm <Action>(ToggleBookmarkWithMnemonic)
 
+vmap <leader>ai <Action>(AIAssistant.Editor.AskAiAssistantInEditor)
+
 nmap s <Action>(flash.search)
 xmap s <Action>(flash.search)
 
